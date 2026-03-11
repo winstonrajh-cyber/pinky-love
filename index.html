@@ -61,6 +61,30 @@ opacity:0;
 transition:1.5s;
 }
 
+/* proposal box */
+
+#proposal{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(0,0,0,0.9);
+padding:30px;
+border-radius:15px;
+box-shadow:0 0 25px #4da6ff;
+}
+
+button{
+padding:12px 25px;
+font-size:18px;
+background:#4da6ff;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+}
+
 </style>
 
 </head>
@@ -75,24 +99,24 @@ transition:1.5s;
 
 <img id="photo" src="photo2.jpg">
 
+<div id="proposal">
+<h2>Will you stay with me forever Pinky? 💙</h2>
+<button onclick="yesAnswer()">YES 💙</button>
+</div>
+
 <audio id="song" loop>
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-/* canvas setup */
+/* canvas */
 
 var canvas=document.getElementById("heart");
 var ctx=canvas.getContext("2d");
 
-function resizeCanvas(){
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-}
-
-resizeCanvas();
-window.addEventListener("resize",resizeCanvas);
 
 /* heart math */
 
@@ -102,8 +126,6 @@ x:16*Math.pow(Math.sin(t),3),
 y:-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))
 }
 }
-
-/* particles */
 
 let particles=[];
 
@@ -129,6 +151,7 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 particles.forEach(p=>{
 
 ctx.fillStyle="#4da6ff";
+
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
 ctx.fill();
@@ -148,7 +171,7 @@ var text=document.getElementById("text");
 var photo=document.getElementById("photo");
 var song=document.getElementById("song");
 
-/* click event */
+/* click gift */
 
 gift.onclick=function(){
 
@@ -179,9 +202,23 @@ photo.style.display="block";
 
 setTimeout(function(){
 photo.style.opacity="1";
-},100);
+},200);
+
+setTimeout(function(){
+document.getElementById("proposal").style.display="block";
+},2000);
 
 }
+
+}
+
+/* YES button */
+
+function yesAnswer(){
+
+document.getElementById("proposal").style.display="none";
+
+text.innerHTML="I am sorry Pinky 💙 You are my best friend.";
 
 }
 
