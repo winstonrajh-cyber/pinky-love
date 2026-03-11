@@ -16,37 +16,36 @@ text-align:center;
 color:white;
 }
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
+/* gift box */
 
 #gift{
 position:absolute;
 top:45%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:100px;
+font-size:90px;
 cursor:pointer;
 animation:float 2s infinite ease-in-out;
 }
 
 @keyframes float{
 0%{transform:translate(-50%,-50%) translateY(0)}
-50%{transform:translate(-50%,-50%) translateY(-20px)}
+50%{transform:translate(-50%,-50%) translateY(-15px)}
 100%{transform:translate(-50%,-50%) translateY(0)}
 }
+
+/* typing text */
 
 #text{
 position:absolute;
 top:70%;
 width:100%;
-font-size:28px;
+font-size:26px;
 color:#4da6ff;
 padding:20px;
 }
+
+/* photo */
 
 #photo{
 display:none;
@@ -54,12 +53,14 @@ position:absolute;
 top:15%;
 left:50%;
 transform:translateX(-50%);
-width:340px;
+width:320px;
 border-radius:20px;
-box-shadow:0 0 40px #4da6ff;
+box-shadow:0 0 30px #4da6ff;
 opacity:0;
 transition:2s;
 }
+
+/* proposal popup */
 
 #proposal{
 display:none;
@@ -70,7 +71,7 @@ transform:translate(-50%,-50%);
 background:rgba(0,0,0,0.85);
 padding:40px;
 border-radius:20px;
-box-shadow:0 0 40px #4da6ff;
+box-shadow:0 0 30px #4da6ff;
 }
 
 button{
@@ -88,8 +89,6 @@ cursor:pointer;
 </head>
 
 <body>
-
-<canvas id="stars"></canvas>
 
 <div id="gift">🎁</div>
 
@@ -111,44 +110,11 @@ cursor:pointer;
 
 <script>
 
-var canvas=document.getElementById("stars");
-var ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let stars=[];
-
-for(let i=0;i<200;i++){
-stars.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2
-});
-}
-
-function drawStars(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="white";
-
-stars.forEach(s=>{
-ctx.beginPath();
-ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
-ctx.fill();
-});
-
-requestAnimationFrame(drawStars);
-
-}
-
-drawStars();
-
-
 var gift=document.getElementById("gift");
 var text=document.getElementById("text");
 var photo=document.getElementById("photo");
+
+/* gift click */
 
 gift.onclick=function(){
 
@@ -158,6 +124,7 @@ typeText("I think I am very rugged... but you changed me.",0);
 
 }
 
+/* typing effect */
 
 function typeText(message,index){
 
@@ -169,7 +136,8 @@ setTimeout(function(){
 typeText(message,index+1);
 },70);
 
-}else{
+}
+else{
 
 setTimeout(showPhoto,2000);
 
@@ -177,6 +145,7 @@ setTimeout(showPhoto,2000);
 
 }
 
+/* photo reveal */
 
 function showPhoto(){
 
@@ -184,7 +153,7 @@ document.getElementById("song").play();
 
 photo.style.display="block";
 
-setTimeout(()=>{
+setTimeout(function(){
 photo.style.opacity=1;
 },200);
 
@@ -194,6 +163,7 @@ typeSecond("You changed me. This is the truth. You have all rights. Sorry Pinky 
 
 }
 
+/* second typing */
 
 function typeSecond(message,index){
 
@@ -205,7 +175,28 @@ setTimeout(function(){
 typeSecond(message,index+1);
 },70);
 
-}else{
+}
+else{
 
-setTimeout(()=>{
-document.getElementB
+setTimeout(function(){
+document.getElementById("proposal").style.display="block";
+},2000);
+
+}
+
+}
+
+/* proposal answer */
+
+function yesAnswer(){
+
+document.getElementById("proposal").style.display="none";
+
+text.innerHTML="Thank you for changing my life Pinky 💙";
+
+}
+
+</script>
+
+</body>
+</html>
