@@ -1,112 +1,211 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For My Pinky 💞</title>
+<title>For My Pinky 💙</title>
 
 <style>
+
 body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-  font-family: Arial, sans-serif;
-  text-align:center;
-  cursor:pointer;
-}
-
-h1{
-  position:absolute;
-  width:100%;
-  top:30px;
-  font-size:30px;
-  color:#ff4da6;
-  animation: glow 2s infinite alternate;
-}
-
-p{
-  position:absolute;
-  width:100%;
-  top:160px;
-  font-size:18px;
-  color:white;
-}
-
-@keyframes glow{
-  from { text-shadow: 0 0 10px pink; }
-  to { text-shadow: 0 0 25px hotpink; }
+margin:0;
+background:black;
+overflow:hidden;
+font-family:Arial;
+text-align:center;
+color:white;
 }
 
 canvas{
-  position:absolute;
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
+
+#gift{
+position:absolute;
+top:45%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:100px;
+cursor:pointer;
+animation:float 2s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translate(-50%,-50%) translateY(0)}
+50%{transform:translate(-50%,-50%) translateY(-20px)}
+100%{transform:translate(-50%,-50%) translateY(0)}
+}
+
+#text{
+position:absolute;
+top:70%;
+width:100%;
+font-size:28px;
+color:#4da6ff;
+padding:20px;
+}
+
+#photo{
+display:none;
+position:absolute;
+top:15%;
+left:50%;
+transform:translateX(-50%);
+width:340px;
+border-radius:20px;
+box-shadow:0 0 40px #4da6ff;
+opacity:0;
+transition:2s;
+}
+
+#proposal{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(0,0,0,0.85);
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px #4da6ff;
+}
+
+button{
+padding:12px 30px;
+font-size:20px;
+background:#4da6ff;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<h1>
-Sorry My Pinky 💞 <br>
-I never feel to say “I love you” <br>
-to anyone without your permission… <br>
-You are my only world 💖
-</h1>
+<canvas id="stars"></canvas>
 
-<p>
-Click anywhere to feel my love 💗
-</p>
+<div id="gift">🎁</div>
 
-<canvas id="heart"></canvas>
+<div id="text"></div>
 
-<audio id="bgMusic" loop>
-  <source src="song.mp3" type="audio/mpeg">
+<img id="photo" src="photo2.jpg">
+
+<div id="proposal">
+
+<h2>Will you stay with me forever Pinky? 💙</h2>
+
+<button onclick="yesAnswer()">YES 💙</button>
+
+</div>
+
+<audio id="song" loop>
+<source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-var canvas = document.getElementById("heart");
-var ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+var canvas=document.getElementById("stars");
+var ctx=canvas.getContext("2d");
 
-function heart(t){
-  return {
-    x: 16*Math.pow(Math.sin(t),3),
-    y: -(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))
-  }
-}
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-let particles = [];
+let stars=[];
 
-for(let i=0;i<2000;i++){
-  let t = Math.random()*Math.PI*2;
-  let pos = heart(t);
-  particles.push({
-    x: canvas.width/2 + pos.x*15,
-    y: canvas.height/2 + pos.y*15,
-    size: Math.random()*2+1
-  });
-}
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  
-  particles.forEach(p=>{
-    ctx.fillStyle="pink";
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fill();
-  });
-
-  requestAnimationFrame(draw);
-}
-
-draw();
-
-document.body.addEventListener("click", function() {
-    var music = document.getElementById("bgMusic");
-    music.play();
+for(let i=0;i<200;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2
 });
-</script>
+}
 
-</body>
-</html>
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+
+stars.forEach(s=>{
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+ctx.fill();
+});
+
+requestAnimationFrame(drawStars);
+
+}
+
+drawStars();
+
+
+var gift=document.getElementById("gift");
+var text=document.getElementById("text");
+var photo=document.getElementById("photo");
+
+gift.onclick=function(){
+
+gift.style.display="none";
+
+typeText("I think I am very rugged... but you changed me.",0);
+
+}
+
+
+function typeText(message,index){
+
+if(index<message.length){
+
+text.innerHTML += message.charAt(index);
+
+setTimeout(function(){
+typeText(message,index+1);
+},70);
+
+}else{
+
+setTimeout(showPhoto,2000);
+
+}
+
+}
+
+
+function showPhoto(){
+
+document.getElementById("song").play();
+
+photo.style.display="block";
+
+setTimeout(()=>{
+photo.style.opacity=1;
+},200);
+
+text.innerHTML="";
+
+typeSecond("You changed me. This is the truth. You have all rights. Sorry Pinky sometimes I play with you 🤗💞 Other than you nothing is important.",0);
+
+}
+
+
+function typeSecond(message,index){
+
+if(index<message.length){
+
+text.innerHTML += message.charAt(index);
+
+setTimeout(function(){
+typeSecond(message,index+1);
+},70);
+
+}else{
+
+setTimeout(()=>{
+document.getElementB
