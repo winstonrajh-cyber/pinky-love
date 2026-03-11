@@ -16,16 +16,12 @@ text-align:center;
 color:white;
 }
 
-/* background heart */
-
 canvas{
 position:fixed;
 top:0;
 left:0;
 z-index:-1;
 }
-
-/* gift */
 
 #gift{
 position:absolute;
@@ -36,8 +32,6 @@ font-size:100px;
 cursor:pointer;
 }
 
-/* text */
-
 #text{
 position:absolute;
 top:70%;
@@ -45,8 +39,6 @@ width:100%;
 font-size:26px;
 color:#4da6ff;
 }
-
-/* photo */
 
 #photo{
 display:none;
@@ -61,7 +53,7 @@ opacity:0;
 transition:1.5s;
 }
 
-/* proposal box */
+/* proposal popup */
 
 #proposal{
 display:none;
@@ -110,15 +102,13 @@ cursor:pointer;
 
 <script>
 
-/* canvas */
+/* heart animation */
 
 var canvas=document.getElementById("heart");
 var ctx=canvas.getContext("2d");
 
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-
-/* heart math */
 
 function heart(t){
 return{
@@ -142,8 +132,6 @@ size:Math.random()*2
 
 }
 
-/* animation */
-
 function draw(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -151,7 +139,6 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 particles.forEach(p=>{
 
 ctx.fillStyle="#4da6ff";
-
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
 ctx.fill();
@@ -170,6 +157,7 @@ var gift=document.getElementById("gift");
 var text=document.getElementById("text");
 var photo=document.getElementById("photo");
 var song=document.getElementById("song");
+var proposal=document.getElementById("proposal");
 
 /* click gift */
 
@@ -204,9 +192,11 @@ setTimeout(function(){
 photo.style.opacity="1";
 },200);
 
+/* show proposal after photo */
+
 setTimeout(function(){
-document.getElementById("proposal").style.display="block";
-},2000);
+proposal.style.display="block";
+},2500);
 
 }
 
@@ -216,7 +206,7 @@ document.getElementById("proposal").style.display="block";
 
 function yesAnswer(){
 
-document.getElementById("proposal").style.display="none";
+proposal.style.display="none";
 
 text.innerHTML="I am sorry Pinky 💙 You are my best friend.";
 
